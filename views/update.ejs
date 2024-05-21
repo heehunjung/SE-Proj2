@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <meta charset="utf-8">
+        <link rel='stylesheet' href='/stylesheets/style.css'/>
+        <script src="/javascripts/jquery-3.7.1.js"></script>
+    </head>
+    <body>
+        <h1><%= title %></h1>
+
+        <!-- 수정 폼 -->
+        <form action="/board/update" method="post" enctype="multipart/form-data" onsubmit="return onWriteSubmit()">
+            <input type="hidden" name="id" value="<%= row.id %>">
+            <table border="1">
+                <tr>
+                    <td>작성자</td>
+                    <td><input type="text" name="creator_id" id="creator_id" value="<%= row.creator_id %>" required/></td>
+                </tr>
+                <tr>
+                    <td>제목</td>
+                    <td><input type="text" name="title" id="title" value="<%= row.title %>" required/></td>
+                </tr>
+                <tr>
+                    <td>내용</td>
+                    <td><textarea name="content" cols="30" rows="10" required><%= row.content %></textarea></td>
+                </tr>
+                <tr>
+                    <td>패스워드</td>
+                    <td><input type="password" name="passwd" id="passwd" required/></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><button type="submit">수정하기</button></td>
+                </tr>
+            </table>
+        </form>
+
+        <form action="/board/delete" method="post">
+            <input type="hidden" name="id" value="<%= row.id %>">
+            <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
+        </form>
+
+        <script>
+            function onWriteSubmit() {
+                console.log("Form submission attempted.");
+                if($("#creator_id").val().trim() == "") {
+                    alert("아이디를 입력해주세요");
+                    $("#creator_id").focus();
+                    return false;
+                }
+                if($("#title").val().trim() == "") {
+                    alert("제목을 입력해주세요");
+                    $("#title").focus();
+                    return false;
+                }
+                if($("#content").val().trim() == "") {
+                    alert("본문 내용을 입력해주세요");
+                    $("#content").focus();
+                    return false;
+                }
+                if($("#passwd").val().trim() == "") {
+                    alert("패스워드를 입력해주세요");
+                    $("#passwd").focus();
+                    return false;
+                }
+                return true;
+            }
+        </script>
+    </body>
+</html>
